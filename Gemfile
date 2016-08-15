@@ -51,3 +51,4 @@ end
 end
 
 gem 'clearance'
+gem 'factory_girl'
