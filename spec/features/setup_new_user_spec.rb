@@ -1,27 +1,27 @@
 require 'rails_helper'
 
 feature 'If no user logged in' do
-  scenario 'they see an info page' do
+  scenario 'they see an about page' do
     visit root_path
     expect(page).to have_css '.about-page'
-    expect(page).to have_link('Sign In')
-    expect(page).to have_link('Sign Up')
+    expect(page).to have_link('Sign in')
+    expect(page).to have_link('Sign up')
   end
 
-  scenario 'user can sign up for an account' do
-    pending
+  scenario 'user can sign up and use an account' do
     visit root_path
-    click_link 'Sign Up'
-    expect(page).to have_css '.sign-up-form'
+    click_link 'Sign up'
+    expect(page).to have_text 'Sign up'
+
+    fill_in 'Email', with: 'user@example.com'
+    fill_in 'Password', with: 'myPassword'
+    click_button 'Sign up'
+
+    expect(page).to have_css '.about-page'
+    expect(page).to have_text('user@example.com')
+    expect(page).to have_button('Sign out')
+
+    click_button 'Sign out'
+    expect(page).to have_text 'Sign in'
   end
 end
-#feature 'User creates a foobar' do
-#  scenario 'they see the foobar on the page' do
-#    visit new_foobar_path
-#
-#    fill_in 'Name', with: 'My foobar'
-#    click_button 'Create Foobar'
-#
-#    expect(page).to have_css '.foobar-name', 'My foobar'
-#  end
-#end

@@ -1,4 +1,9 @@
 <h1 class="about-page">About</h1>
 
-<a href="#">Sign In</a>
-<a href="#">Sign Up</a>
+<% if signed_in? %>
+  <%= current_user.email %>
+  <%= button_to "Sign out", sign_out_path, method: :delete %>
+<% else %>
+  <%= link_to "Sign in", sign_in_path %>
+  <%= link_to "Sign up", sign_up_path %>
+<% end %>
