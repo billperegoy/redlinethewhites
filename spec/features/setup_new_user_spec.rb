@@ -17,7 +17,7 @@ feature 'If no user logged in' do
     fill_in 'Password', with: 'myPassword'
     click_button 'Sign up'
 
-    expect(page).to have_css '.user-progress-page'
+    expect(page).to have_css('.user-progress-page')
     expect(page).to have_text('user@example.com')
     expect(page).to have_button('Sign out')
 

@@ -1,5 +1,4 @@
 <div class="user-progress-page">
   <h1>Status for user: <%= @user.email %></h1>
-  <p> <%= current_user.email %> </p>
   <%= button_to "Sign out", sign_out_path, method: :delete %>
 </div>
