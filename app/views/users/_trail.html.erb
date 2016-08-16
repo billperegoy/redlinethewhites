@@ -1,20 +1,17 @@
 <li>
-  <h3>Trail: <%= trail.name %></h3>
-
-  <table>
-    <tr>
-      <th>Start</th>
-      <th>End</th>
-      <th>Distance</th>
-      <th>Hiked?</th>
-    </tr>
-    <% trail.trail_segments.each do |segment| %>
-      <tr>
-        <td><%= segment.start %></td>
-        <td><%= segment.end %></td>
-        <td><%= segment.distance %></td>
-        <td><%= this_segment_hiked?(segment: segment, user: @user) %></td>
-      </tr>
-    <% end %>
-  </table>
+  <ul class="accordion">
+    <li>
+    <a href="javascript:void(0)" class="js-accordion-trigger"><%= trail.name %></a>
+      <ul class="submenu">
+      <% trail.trail_segments.each do |segment| %>
+        <li>
+          <span><%= segment.start %></span>
+          <span><%= segment.end %></span>
+          <span><%= segment.distance %></span>
+          <span><%= this_segment_hiked?(segment: segment, user: @user) %></span>
+      </li>
+      <% end %>
+      </ul>
+    </li>
+  </ul>
 </li>
