@@ -51,4 +51,5 @@ end
 end
 
 gem 'clearance'
-gem 'factory_girl'
+gem 'bourbon'
+gem 'neat'
