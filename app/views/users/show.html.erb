@@ -1,4 +1,29 @@
 <div class="user-progress-page">
   <h1>Status for user: <%= @user.email %></h1>
   <%= button_to "Sign out", sign_out_path, method: :delete %>
+
+  <% @regions.each do |region| %>
+    <h2>Region: <%= region.name %></h2>
+    <% region.trails.each do |trail| %>
+      <h3>Trail: <%= trail.name %></h3>
+
+      <table>
+      <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th>Distance</th>
+          <th>Hiked?</th>
+      </tr>
+      <% trail.trail_segments.each do |segment| %>
+        <tr>
+          <td><%= segment.start %></td>
+          <td><%= segment.end %></td>
+          <td><%= segment.distance %></td>
+          <td><%= this_segment_hiked?(segment: segment, user: @user) %></td>
+        </tr>
+      <% end %>
+    </table>
+
+    <% end %>
+  <% end %>
 </div>

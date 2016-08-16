@@ -28,7 +28,12 @@ trail = Trail.create(name: "Six Husbands Trail", region_id: region.id)
 segment = TrailSegment.create(start: "Great Gulf Trail", end: "Buttress Trail", distance: 0.5, trail_id: trail.id)
 segment = TrailSegment.create(start: "Buttress Trail", end: "Edmands Col Cutoff", distance: 1.7, trail_id: trail.id)
 segment = TrailSegment.create(start: "Edmands Col Cutoff", end: "Gulfside Trail", distance: 2.0, trail_id: trail.id)
+saved = segment
 segment = TrailSegment.create(start: "Gulfside Trail", end: "Mt. Jefferson Loop", distance: 2.3, trail_id: trail.id)
 
 trail = Trail.create(name: "Buttress Trail", region_id: region.id)
 segment = TrailSegment.create(start: "Six HusbandsTrail", end: "Star Lake Trail", distance: 1.9, trail_id: trail.id)
+
+SegmentConnector.create(user_id: 2, trail_segment_id: segment.id)
+SegmentConnector.create(user_id: 1, trail_segment_id: segment.id)
+SegmentConnector.create(user_id: 1, trail_segment_id: saved.id)
