@@ -4,35 +4,7 @@
 
   <ul class="accordion">
   <% @regions.each do |region| %>
-    <li>
-      <a href="javascript:void(0)" class="js-accordion-trigger"><%= region.name %></a>
-      <ul class="submenu">
-        <% region.trails.each do |trail| %>
-
-          <li>
-            <h3>Trail: <%= trail.name %></h3>
-
-            <table>
-            <tr>
-                <th>Start</th>
-                <th>End</th>
-                <th>Distance</th>
-                <th>Hiked?</th>
-            </tr>
-            <% trail.trail_segments.each do |segment| %>
-              <tr>
-                <td><%= segment.start %></td>
-                <td><%= segment.end %></td>
-                <td><%= segment.distance %></td>
-                <td><%= this_segment_hiked?(segment: segment, user: @user) %></td>
-              </tr>
-            <% end %>
-          </table>
-        </li>
-
-        <% end %>
-      </ul>
-    </li>
+    <%= render partial: "region", locals: {region: region} %>
   <% end %>
   </ul>
 </div>

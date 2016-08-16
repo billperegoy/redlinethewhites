@@ -1,0 +1,8 @@
+<li>
+  <a href="javascript:void(0)" class="js-accordion-trigger"><%= region.name %></a>
+  <ul class="submenu">
+    <% region.trails.each do |trail| %>
+      <%= render partial: "trail", locals: {trail: trail} %>
+    <% end %>
+ </ul>
+</li>
