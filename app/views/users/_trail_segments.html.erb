@@ -3,10 +3,8 @@
     <span><%= segment.start %></span>
     <span><%= segment.end %></span>
     <span><%= segment.distance %></span>
-    <% if  this_segment_hiked?(segment: segment, user: @user) %>
-      <input type="checkbox" checked>
-    <% else %>
-      <input type="checkbox" >
+    <%= form_tag do %>
+      <%= check_box_tag(:hiked, :hiked, this_segment_hiked?(segment: segment, user: @user)) %>
     <% end %>
   </li>
 <% end %>
