@@ -8,6 +8,7 @@
 Region.delete_all
 Trail.delete_all
 TrailSegment.delete_all
+SegmentConnector.delete_all
 
 region = Region.create(name: "Mt. Washington and the Southern Ridges")
 trail = Trail.create(name: "Huntington Ravine Trail", region_id: region.id)
