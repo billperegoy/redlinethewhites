@@ -2,6 +2,9 @@ import Html exposing (..)
 import Html.App as App
 import Html.Attributes exposing (..)
 
+import AccordionData exposing (..)
+import Accordion exposing (..)
+
 --
 -- App
 --
@@ -19,7 +22,13 @@ main =
 --
 type alias Model =
   {
-    foo : String
+    data : List AccordionData
+  }
+
+type alias AccordionData =
+  {
+    label : String
+  , items : List (Html Msg)
   }
 
 --
@@ -28,7 +37,27 @@ type alias Model =
 init : (Model, Cmd Msg)
 init =
   {
-    foo = "foo"
+    data = 
+      [ 
+        AccordionData "Accordion Item 1" 
+          [
+            accordionSubItem [ text "Sub Item 1" ]
+          , accordionSubItem [ text "Sub Item 2" ]
+          , accordionSubItem [ text "Sub Item 3" ]
+          ]
+      , AccordionData "Accordion Item 2" 
+          [
+            accordionSubItem [ text "Sub Item 4" ]
+          , accordionSubItem [ text "Sub Item 5" ]
+          , accordionSubItem [ text "Sub Item 6" ]
+          ]
+      , AccordionData "Accordion Item 3" 
+          [
+            accordionSubItem [ text "Sub Item 7" ]
+          , accordionSubItem [ text "Sub Item 8" ]
+          , accordionSubItem [ text "Sub Item 9" ]
+          ]
+      ]
   } ! []
 
 
@@ -44,48 +73,12 @@ update msg model =
     NoOp ->
       model ! []
 
-accordionSubItem : List (Html a) -> Html a
-accordionSubItem content = 
-        li []
-          [ 
-            a [href "javascript:void(0)" ] content
-          ]
-
-subItemList : List (Html a)
-subItemList =
-       [
-         accordionSubItem [ text "Sub Item 1" ]
-       , accordionSubItem [ text "Sub Item 2" ]
-       , accordionSubItem [ text "Sub Item 3" ]
-       ]
-
-accordionItem : String -> List (Html Msg) -> Html a
-accordionItem name subItems=
-  li []
-    [
-      a 
-        [ href "javascript:void(0)", class "js-accordion-trigger" ]
-        [ text name ]
-    , ul 
-        [ class "submenu" ]
-        subItemList
-    ]
-
-accordion : Html Msg
-accordion = 
-  ul [ class "accordion" ]
-    [
-      accordionItem "Accordion Item 1" subItemList
-    , accordionItem "Accordion Item 2" subItemList
-    , accordionItem "Accordion Item 3" subItemList
-    ]
-
 --
 -- View
 --
 view : Model -> Html Msg
 view model =
-  accordion
+  Accordion.view model.data
 
 --
 -- Subscriptions
