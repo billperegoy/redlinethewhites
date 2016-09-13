@@ -13,6 +13,7 @@
 
   <script type="text/javascript">
     var elmDiv = document.getElementById('elm-app');
-    Elm.Main.embed(elmDiv);
+    var app = Elm.Accordion.embed(elmDiv);
+    Accordion.setup(app);
   </script>
 </html>
