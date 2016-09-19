@@ -22,27 +22,28 @@ main =
 --
 
 
+type alias VisibilityElement =
+    ( Int, Bool )
+
+
 type alias Model =
-    { visible : List ( Int, Bool )
+    { visible : List VisibilityElement
     }
 
 
 initAccordionData : List (AccordionData Msg)
 initAccordionData =
     [ AccordionData "Accordion Item 1"
-        0
         [ accordionSubItem [ text "Sub Item 1" ]
         , accordionSubItem [ text "Sub Item 2" ]
         , accordionSubItem [ text "Sub Item 3" ]
         ]
     , AccordionData "Accordion Item 2"
-        1
         [ accordionSubItem [ text "Sub Item 4" ]
         , accordionSubItem [ text "Sub Item 5" ]
         , accordionSubItem [ text "Sub Item 6" ]
         ]
     , AccordionData "Accordion Item 3"
-        2
         [ accordionSubItem [ text "Sub Item 7" ]
         , accordionSubItem [ text "Sub Item 8" ]
         , accordionSubItem [ text "Sub Item 9" ]
@@ -68,7 +69,7 @@ type Msg
     = Toggle Int
 
 
-toggleIfSelected : Int -> ( Int, Bool ) -> ( Int, Bool )
+toggleIfSelected : Int -> VisibilityElement -> VisibilityElement
 toggleIfSelected id tuple =
     if id == fst tuple then
         ( id, not (snd tuple) )
@@ -104,13 +105,13 @@ itemIdString id =
     "item-" ++ toString id
 
 
-accordionItem : AccordionData Msg -> Html Msg
-accordionItem data =
+accordionItem : Int -> AccordionData Msg -> Html Msg
+accordionItem index data =
     li []
         [ a
-            [ id (itemIdString data.id)
+            [ id (itemIdString index)
             , href "javascript:void(0)"
-            , onClick (Toggle data.id)
+            , onClick (Toggle index)
             ]
             [ text data.label ]
         , ul
@@ -122,7 +123,8 @@ accordionItem data =
 accordionList : List (AccordionData Msg) -> Html Msg
 accordionList data =
     ul [ class "accordion" ]
-        (List.map accordionItem data)
+        -- FIXME - This index sgud come from model... not 0
+        (List.map (accordionItem 0) data)
 
 
 view : Model -> Html Msg
