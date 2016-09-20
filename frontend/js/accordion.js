@@ -5,7 +5,7 @@ var Accordion = (function () {
         var elem = document.getElementById(id);
 
         jQuery(elem).parent().find('.submenu').slideToggle('fast');
-        jQuery(elem).parent().toggleClass('is-expanded');
+        //jQuery(elem).parent().toggleClass('is-expanded');
       });
     }
   }

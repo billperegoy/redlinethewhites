@@ -56,12 +56,24 @@ initAccordionData =
         , accordionSubItem [ text "Sub Item 11" ]
         , accordionSubItem [ text "Sub Item 12" ]
         ]
+    , AccordionData "Accordion Item 4"
+        [ accordionSubItem [ text "Sub Item 13" ]
+        , accordionSubItem [ text "Sub Item 14" ]
+        , accordionSubItem [ text "Sub Item 15" ]
+        ]
     ]
 
 
 init : ( Model, Cmd Msg )
 init =
-    { visible = [ ( 0, False ), ( 1, False ), ( 2, False ) ] } ! []
+    { visible =
+        [ ( 0, False )
+        , ( 1, False )
+        , ( 2, False )
+        , ( 3, False )
+        ]
+    }
+        ! []
 
 
 
@@ -110,15 +122,24 @@ itemIdString id =
     "item-" ++ toString id
 
 
+expandedClass : VisibilityElement -> String
+expandedClass visibility =
+    if snd visibility then
+        "is-expanded"
+    else
+        "is-not-expended"
+
+
 accordionItem : ( VisibilityElement, AccordionData Msg ) -> Html Msg
-accordionItem tuple =
+accordionItem visibiityTuple =
     let
         ( visibility, data ) =
-            tuple
+            visibiityTuple
     in
         li []
             [ a
                 [ id (itemIdString (fst visibility))
+                , class (expandedClass visibility)
                 , href "javascript:void(0)"
                 , onClick (Toggle (fst visibility))
                 ]
