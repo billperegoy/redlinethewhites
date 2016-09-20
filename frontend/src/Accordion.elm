@@ -158,7 +158,6 @@ accordionList visibility data =
             List.map2 (,) visibility data
     in
         ul [ class "accordion" ]
-            -- FIXME - This index sgud come from model... not 0
             (List.map accordionItem zippedData)
 
 
