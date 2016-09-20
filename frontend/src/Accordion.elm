@@ -4,7 +4,6 @@ import Html exposing (..)
 import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import AccordionData exposing (..)
 
 
 main =
@@ -20,6 +19,12 @@ main =
 --
 -- Model
 --
+
+
+type alias AccordionData a =
+    { label : String
+    , items : List (Html a)
+    }
 
 
 type alias VisibilityElement =
@@ -105,33 +110,42 @@ itemIdString id =
     "item-" ++ toString id
 
 
-accordionItem : Int -> AccordionData Msg -> Html Msg
-accordionItem index data =
-    li []
-        [ a
-            [ id (itemIdString index)
-            , href "javascript:void(0)"
-            , onClick (Toggle index)
+accordionItem : ( VisibilityElement, AccordionData Msg ) -> Html Msg
+accordionItem tuple =
+    let
+        ( visibility, data ) =
+            tuple
+    in
+        li []
+            [ a
+                [ id (itemIdString (fst visibility))
+                , href "javascript:void(0)"
+                , onClick (Toggle (fst visibility))
+                ]
+                [ text data.label ]
+            , ul
+                [ class "submenu" ]
+                data.items
             ]
-            [ text data.label ]
-        , ul
-            [ class "submenu" ]
-            data.items
-        ]
 
 
-accordionList : List (AccordionData Msg) -> Html Msg
-accordionList data =
-    ul [ class "accordion" ]
-        -- FIXME - This index sgud come from model... not 0
-        (List.map (accordionItem 0) data)
+accordionList : List VisibilityElement -> List (AccordionData Msg) -> Html Msg
+accordionList visibility data =
+    let
+        zippedData : List ( VisibilityElement, AccordionData Msg )
+        zippedData =
+            List.map2 (,) visibility data
+    in
+        ul [ class "accordion" ]
+            -- FIXME - This index sgud come from model... not 0
+            (List.map accordionItem zippedData)
 
 
 view : Model -> Html Msg
 view model =
     div []
         [ ul [] (List.map (\e -> li [] [ text (toString (snd e)) ]) model.visible)
-        , accordionList initAccordionData
+        , accordionList model.visible initAccordionData
         ]
 
 
