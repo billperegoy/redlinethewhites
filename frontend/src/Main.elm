@@ -110,7 +110,7 @@ init2 =
         , ( 2, False )
         , ( 3, False )
         ]
-    , toggleSpeed = Slow
+    , toggleSpeed = Custom 3000
     }
 
 

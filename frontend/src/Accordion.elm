@@ -14,6 +14,7 @@ import Html.Events exposing (..)
 type ToggleSpeed
     = Fast
     | Slow
+    | Custom Int
 
 
 type alias AccordionData a =
@@ -70,14 +71,17 @@ toggleIfSelected id tuple =
         tuple
 
 
-speedToString : ToggleSpeed -> String
-speedToString speed =
+speedToInt : ToggleSpeed -> Int
+speedToInt speed =
     case speed of
         Fast ->
-            "fast"
+            200
 
         Slow ->
-            "slow"
+            600
+
+        Custom duration ->
+            duration
 
 
 update : Msg -> Model -> ( Model, Cmd a )
@@ -87,7 +91,7 @@ update msg model =
             { model
                 | visible = List.map (\e -> toggleIfSelected id e) model.visible
             }
-                ! [ toggleAccordion ( model.name, (itemIdString id), speedToString model.toggleSpeed ) ]
+                ! [ toggleAccordion ( model.name, (itemIdString id), speedToInt model.toggleSpeed ) ]
 
 
 
@@ -154,4 +158,4 @@ view model data =
         ]
 
 
-port toggleAccordion : ( String, String, String ) -> Cmd msg
+port toggleAccordion : ( String, String, Int ) -> Cmd msg
