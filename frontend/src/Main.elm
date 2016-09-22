@@ -2,7 +2,6 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.App as App
-import Ports exposing (..)
 import Accordion exposing (..)
 
 

@@ -1,10 +1,9 @@
-module Accordion exposing (..)
+port module Accordion exposing (..)
 
 import Html exposing (..)
 import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Ports exposing (..)
 
 
 --
@@ -137,3 +136,6 @@ view model data =
         [ ul [] (List.map (\e -> li [] [ text (toString (snd e)) ]) model.visible)
         , accordionList model data.elements
         ]
+
+
+port toggleAccordion : String -> Cmd msg
