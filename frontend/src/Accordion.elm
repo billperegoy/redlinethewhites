@@ -13,6 +13,11 @@ import Ports exposing (..)
 
 
 type alias AccordionData a =
+    { elements : List (AccordionElement a)
+    }
+
+
+type alias AccordionElement a =
     { label : String
     , items : List (Html a)
     }
@@ -23,13 +28,15 @@ type alias VisibilityElement =
 
 
 type alias Model =
-    { visible : List VisibilityElement
+    { name : String
+    , visible : List VisibilityElement
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    { visible =
+    { name = "accordion-1"
+    , visible =
         [ ( 0, False )
         , ( 1, False )
         , ( 2, False )
@@ -93,7 +100,7 @@ expandedClass visibility =
         "is-not-expended"
 
 
-accordionItem : ( VisibilityElement, AccordionData Msg ) -> Html Msg
+accordionItem : ( VisibilityElement, AccordionElement Msg ) -> Html Msg
 accordionItem visibiityTuple =
     let
         ( visibility, data ) =
@@ -113,20 +120,20 @@ accordionItem visibiityTuple =
             ]
 
 
-accordionList : List VisibilityElement -> List (AccordionData Msg) -> Html Msg
-accordionList visibility data =
+accordionList : Model -> List (AccordionElement Msg) -> Html Msg
+accordionList model data =
     let
-        zippedData : List ( VisibilityElement, AccordionData Msg )
+        zippedData : List ( VisibilityElement, AccordionElement Msg )
         zippedData =
-            List.map2 (,) visibility data
+            List.map2 (,) model.visible data
     in
-        ul [ class "accordion" ]
+        ul [ class "accordion", id model.name ]
             (List.map accordionItem zippedData)
 
 
-view : Model -> List (AccordionData Msg) -> Html Msg
+view : Model -> AccordionData Msg -> Html Msg
 view model data =
     div []
         [ ul [] (List.map (\e -> li [] [ text (toString (snd e)) ]) model.visible)
-        , accordionList model.visible data
+        , accordionList model data.elements
         ]

@@ -27,19 +27,31 @@ type Msg
     | Accordion2 Accordion.Msg
 
 
-initAccordionData : List (AccordionData Accordion.Msg)
-initAccordionData =
-    [ AccordionData "Accordion Item 1"
+initAccordionData1 : AccordionData Accordion.Msg
+initAccordionData1 =
+    { elements = initAccordionElements
+    }
+
+
+initAccordionData2 : AccordionData Accordion.Msg
+initAccordionData2 =
+    { elements = initAccordionElements
+    }
+
+
+initAccordionElements : List (AccordionElement Accordion.Msg)
+initAccordionElements =
+    [ AccordionElement "Accordion Item 1"
         [ accordionSubItem [ text "Sub Item 1" ]
         , accordionSubItem [ text "Sub Item 2" ]
         , accordionSubItem [ text "Sub Item 3" ]
         ]
-    , AccordionData "Accordion Item 2"
+    , AccordionElement "Accordion Item 2"
         [ accordionSubItem [ text "Sub Item 4" ]
         , accordionSubItem [ text "Sub Item 5" ]
         , accordionSubItem [ text "Sub Item 6" ]
         ]
-    , AccordionData "Accordion Item 3"
+    , AccordionElement "Accordion Item 3"
         [ accordionSubItem [ text "Sub Item 7" ]
         , accordionSubItem [ text "Sub Item 8" ]
         , accordionSubItem [ text "Sub Item 9" ]
@@ -47,7 +59,7 @@ initAccordionData =
         , accordionSubItem [ text "Sub Item 11" ]
         , accordionSubItem [ text "Sub Item 12" ]
         ]
-    , AccordionData "Accordion Item 4"
+    , AccordionElement "Accordion Item 4"
         [ accordionSubItem [ text "Sub Item 13" ]
         , accordionSubItem [ text "Sub Item 14" ]
         , accordionSubItem [ text "Sub Item 15" ]
@@ -76,10 +88,34 @@ update msg model =
                 { model | accordion2 = result } ! [ cmd ]
 
 
+init1 : Accordion.Model
+init1 =
+    { name = "accordion-1"
+    , visible =
+        [ ( 0, False )
+        , ( 1, False )
+        , ( 2, False )
+        , ( 3, False )
+        ]
+    }
+
+
+init2 : Accordion.Model
+init2 =
+    { name = "accordion-2"
+    , visible =
+        [ ( 0, False )
+        , ( 1, False )
+        , ( 2, False )
+        , ( 3, False )
+        ]
+    }
+
+
 init : ( Model, Cmd Msg )
 init =
-    { accordion1 = fst Accordion.init
-    , accordion2 = fst Accordion.init
+    { accordion1 = init1
+    , accordion2 = init2
     }
         ! []
 
@@ -88,8 +124,8 @@ view : Model -> Html Msg
 view model =
     div []
         [ div [] [ text "Hello world" ]
-        , App.map Accordion1 (Accordion.view model.accordion1 initAccordionData)
-        , App.map Accordion2 (Accordion.view model.accordion2 initAccordionData)
+        , App.map Accordion1 (Accordion.view model.accordion1 initAccordionData1)
+        , App.map Accordion2 (Accordion.view model.accordion2 initAccordionData2)
         ]
 
 
