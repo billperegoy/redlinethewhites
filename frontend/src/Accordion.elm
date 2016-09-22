@@ -11,6 +11,11 @@ import Html.Events exposing (..)
 --
 
 
+type ToggleSpeed
+    = Fast
+    | Slow
+
+
 type alias AccordionData a =
     { elements : List (AccordionElement a)
     }
@@ -29,6 +34,7 @@ type alias VisibilityElement =
 type alias Model =
     { name : String
     , visible : List VisibilityElement
+    , toggleSpeed : ToggleSpeed
     }
 
 
@@ -41,6 +47,7 @@ init =
         , ( 2, False )
         , ( 3, False )
         ]
+    , toggleSpeed = Fast
     }
         ! []
 
@@ -63,6 +70,16 @@ toggleIfSelected id tuple =
         tuple
 
 
+speedToString : ToggleSpeed -> String
+speedToString speed =
+    case speed of
+        Fast ->
+            "fast"
+
+        Slow ->
+            "slow"
+
+
 update : Msg -> Model -> ( Model, Cmd a )
 update msg model =
     case msg of
@@ -70,7 +87,7 @@ update msg model =
             { model
                 | visible = List.map (\e -> toggleIfSelected id e) model.visible
             }
-                ! [ toggleAccordion (itemIdString id) ]
+                ! [ toggleAccordion ( model.name, (itemIdString id), speedToString model.toggleSpeed ) ]
 
 
 
@@ -133,9 +150,8 @@ accordionList model data =
 view : Model -> AccordionData Msg -> Html Msg
 view model data =
     div []
-        [ ul [] (List.map (\e -> li [] [ text (toString (snd e)) ]) model.visible)
-        , accordionList model data.elements
+        [ accordionList model data.elements
         ]
 
 
-port toggleAccordion : String -> Cmd msg
+port toggleAccordion : ( String, String, String ) -> Cmd msg

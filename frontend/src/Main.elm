@@ -96,6 +96,7 @@ init1 =
         , ( 2, False )
         , ( 3, False )
         ]
+    , toggleSpeed = Fast
     }
 
 
@@ -108,6 +109,7 @@ init2 =
         , ( 2, False )
         , ( 3, False )
         ]
+    , toggleSpeed = Slow
     }
 
 
@@ -122,8 +124,7 @@ init =
 view : Model -> Html Msg
 view model =
     div []
-        [ div [] [ text "Hello world" ]
-        , App.map Accordion1 (Accordion.view model.accordion1 initAccordionData1)
+        [ App.map Accordion1 (Accordion.view model.accordion1 initAccordionData1)
         , App.map Accordion2 (Accordion.view model.accordion2 initAccordionData2)
         ]
 
