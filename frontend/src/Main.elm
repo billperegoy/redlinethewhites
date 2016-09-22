@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import Html.App as App
 import Accordion exposing (..)
 
@@ -123,7 +124,7 @@ init =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ style [ ( "width", "200px" ) ] ]
         [ App.map Accordion1 (Accordion.view model.accordion1 initAccordionData1)
         , App.map Accordion2 (Accordion.view model.accordion2 initAccordionData2)
         ]
