@@ -2,6 +2,7 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.App as App
+import Ports exposing (..)
 import Accordion exposing (..)
 
 
@@ -15,15 +16,18 @@ main =
 
 
 type alias Model =
-    { accordion : Accordion.Model }
+    { accordion1 : Accordion.Model
+    , accordion2 : Accordion.Model
+    }
 
 
 type Msg
     = NoOp
-    | Accordion Accordion.Msg
+    | Accordion1 Accordion.Msg
+    | Accordion2 Accordion.Msg
 
 
-initAccordionData : List (AccordionData Msg)
+initAccordionData : List (AccordionData Accordion.Msg)
 initAccordionData =
     [ AccordionData "Accordion Item 1"
         [ accordionSubItem [ text "Sub Item 1" ]
@@ -57,22 +61,35 @@ update msg model =
         NoOp ->
             model ! []
 
-        Accordion msg ->
-            { model | accordion = fst (Accordion.update msg model.accordion) }
-                ! []
+        Accordion1 msg ->
+            let
+                ( result, cmd ) =
+                    Accordion.update msg model.accordion1
+            in
+                { model | accordion1 = result } ! [ cmd ]
+
+        Accordion2 msg ->
+            let
+                ( result, cmd ) =
+                    Accordion.update msg model.accordion2
+            in
+                { model | accordion2 = result } ! [ cmd ]
 
 
 init : ( Model, Cmd Msg )
 init =
-    { accordion = fst Accordion.init } ! []
+    { accordion1 = fst Accordion.init
+    , accordion2 = fst Accordion.init
+    }
+        ! []
 
 
 view : Model -> Html Msg
 view model =
     div []
         [ div [] [ text "Hello world" ]
-        , App.map Accordion (Accordion.view model.accordion)
-          --, App.map (\e -> NoOp) (Accordion.view accordionModel)
+        , App.map Accordion1 (Accordion.view model.accordion1 initAccordionData)
+        , App.map Accordion2 (Accordion.view model.accordion2 initAccordionData)
         ]
 
 
